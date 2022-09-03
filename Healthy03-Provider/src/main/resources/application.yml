@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: healthy-provider
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///healthy
+    username: root
+    password: root
+dubbo:
+  registry:
+    address: zookeeper://101.34.31.13:2181
+    timeout: 60000
+  metadata-report:
+    address: zookeeper://101.34.31.13:2181
+    timeout: 60000
+  protocol:
+    name: dubbo
+    port: 20080
+  scan:
+    base-packages: cn.aixan.service.impl
+  config-center:
+    address: zookeeper://101.34.31.13:2181
+    timeout: 60000
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: cn.aixan.model.domain
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 0
+      logic-not-delete-value: 1

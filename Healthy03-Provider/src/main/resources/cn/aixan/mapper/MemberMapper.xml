@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.aixan.mapper.MemberMapper">
+
+    <resultMap id="BaseResultMap" type="cn.aixan.model.domain.Member">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="filenumber" column="fileNumber" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="VARCHAR"/>
+            <result property="idcard" column="idCard" jdbcType="VARCHAR"/>
+            <result property="phonenumber" column="phoneNumber" jdbcType="VARCHAR"/>
+            <result property="regtime" column="regTime" jdbcType="DATE"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="birthday" column="birthday" jdbcType="DATE"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,fileNumber,name,
+        sex,idCard,phoneNumber,
+        regTime,password,email,
+        birthday,remark,deleted
+    </sql>
+</mapper>

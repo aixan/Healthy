@@ -1,0 +1,13 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: healthy-mobile
+dubbo:
+  registry:
+    address: zookeeper://101.34.31.13:2181
+    timeout: 60000
+  protocol:
+    name: dubbo
+  scan:
+    base-packages: cn.aixan.controller
