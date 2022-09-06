@@ -1,20 +1,155 @@
 package cn.aixan.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.aixan.model.domain.Checkgroup;
-import cn.aixan.service.CheckgroupService;
+import cn.aixan.constant.MessageConstant;
 import cn.aixan.mapper.CheckgroupMapper;
+import cn.aixan.model.domain.Checkgroup;
+import cn.aixan.model.domain.CheckgroupCheckitem;
+import cn.aixan.service.CheckgroupService;
+import cn.aixan.util.QueryPage;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
-* @author aix
-* @description 针对表【t_checkgroup(检查组)】的数据库操作Service实现
-* @createDate 2022-09-02 15:25:09
-*/
+ * @author aix
+ * @description 针对表【t_checkgroup(检查组)】的数据库操作Service实现
+ * @createDate 2022-09-02 15:25:09
+ */
 @DubboService
 public class CheckgroupServiceImpl extends ServiceImpl<CheckgroupMapper, Checkgroup>
-    implements CheckgroupService{
+        implements CheckgroupService {
 
+    @Resource
+    private CheckgroupCheckitemServiceImpl checkgroupCheckitemService;
+
+    @Override
+    public Page<Checkgroup> getCheckGroupPage(QueryPage queryPage) {
+        // 判断queryPage是否为空
+        if (queryPage == null) {
+            queryPage = new QueryPage(1, 10, "");
+        }
+        String queryString = queryPage.getQueryString();
+        Integer currentPage = queryPage.getCurrentPage();
+        Integer pageSize = queryPage.getPageSize();
+        QueryWrapper<Checkgroup> queryWrapper = new QueryWrapper<>();
+        if (StringUtils.isNotBlank(queryString)) {
+            queryWrapper.like("code", queryString)
+                    .or().like("name", queryString)
+                    .or().like("helpCode", queryString);
+        }
+        Page<Checkgroup> page = new Page<>(currentPage, pageSize);
+        return this.getBaseMapper().selectPage(page, queryWrapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addCheckGroupRelationCheckItem(Checkgroup checkgroup, Integer[] checkItemId) {
+        if (checkgroup == null || checkItemId.length == 0) {
+            return false;
+        }
+        // 查询检查项名字是否存在
+        String name = checkgroup.getName();
+        if (StringUtils.isAnyBlank(name)) {
+            return false;
+        }
+        QueryWrapper<Checkgroup> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", name);
+        long count = this.count(queryWrapper);
+        if (count > 0) {
+            return false;
+        }
+        // 防止传入ID
+        checkgroup.setId(null);
+
+        boolean saveResult = this.save(checkgroup);
+        if (!saveResult) {
+            throw new RuntimeException(MessageConstant.ADD_CHECK_GROUP_FAIL);
+        }
+        Integer checkGroupId = checkgroup.getId();
+        for (Integer integer : checkItemId) {
+            CheckgroupCheckitem checkGroupCheckitem = new CheckgroupCheckitem(checkGroupId, integer);
+            int insert = checkgroupCheckitemService.getBaseMapper().insert(checkGroupCheckitem);
+            if (insert <= 0) {
+                throw new RuntimeException(MessageConstant.ADD_CHECK_GROUP_FAIL);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean putCheckGroupRelationCheckItem(Checkgroup checkgroup, Integer[] checkItemId) {
+        if (checkgroup == null || checkgroup.getId() <= 0 || checkItemId.length == 0) {
+            return false;
+        }
+        // 查询检查项名字是否存在
+        String name = checkgroup.getName();
+        if (StringUtils.isAnyBlank(name)) {
+            return false;
+        }
+        QueryWrapper<Checkgroup> checkQueryWrapper = new QueryWrapper<>();
+        checkQueryWrapper.eq("name", name);
+        Checkgroup one = getOne(checkQueryWrapper);
+        if (one != null && !Objects.equals(one.getId(), checkgroup.getId())) {
+            return false;
+        }
+        QueryWrapper<Checkgroup> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", checkgroup.getId());
+        boolean saveResult = this.update(checkgroup, queryWrapper);
+        if (!saveResult) {
+            throw new RuntimeException(MessageConstant.EDIT_CHECK_GROUP_FAIL);
+        }
+        Integer checkGroupId = checkgroup.getId();
+        // 添加
+        for (Integer integer : checkItemId) {
+            QueryWrapper<CheckgroupCheckitem> checkgroupCheckitemQueryWrapper = new QueryWrapper<>();
+            checkgroupCheckitemQueryWrapper.eq("checkgroup_id", checkGroupId);
+            checkgroupCheckitemQueryWrapper.eq("checkitem_id", integer);
+            long count = checkgroupCheckitemService.count(checkgroupCheckitemQueryWrapper);
+            if (count == 0) {
+                CheckgroupCheckitem checkGroupCheckitem = new CheckgroupCheckitem(checkGroupId, integer);
+                int insert = checkgroupCheckitemService.getBaseMapper().insert(checkGroupCheckitem);
+                if (insert <= 0) {
+                    throw new RuntimeException(MessageConstant.EDIT_CHECK_GROUP_FAIL);
+                }
+            }
+        }
+        // 删除陈旧的
+        QueryWrapper<CheckgroupCheckitem> checkgroupCheckitemQueryWrapper = new QueryWrapper<>();
+        checkgroupCheckitemQueryWrapper.eq("checkgroup_id", checkGroupId);
+        checkgroupCheckitemQueryWrapper.notIn("checkitem_id", Arrays.asList(checkItemId));
+        boolean remove = checkgroupCheckitemService.remove(checkgroupCheckitemQueryWrapper);
+        if (!remove) {
+            throw new RuntimeException(MessageConstant.EDIT_CHECK_GROUP_FAIL);
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean  deleteById(Long id) {
+        if (id <= 0) {
+            throw new RuntimeException("检查组ID错误");
+        }
+        QueryWrapper<CheckgroupCheckitem> checkGroupCheckItemQueryWrapper = new QueryWrapper<>();
+        checkGroupCheckItemQueryWrapper.eq("checkgroup_id", id);
+        boolean remove = this.checkgroupCheckitemService.remove(checkGroupCheckItemQueryWrapper);
+        if (!remove) {
+            throw  new RuntimeException("关联表删除失败");
+        }
+        boolean b = this.removeById(id);
+        if (!b) {
+            throw new RuntimeException("检查组删除失败");
+        }
+        return true;
+    }
 }
 
 

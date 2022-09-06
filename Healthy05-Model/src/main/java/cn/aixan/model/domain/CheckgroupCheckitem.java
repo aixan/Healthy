@@ -3,7 +3,10 @@ package cn.aixan.model.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 栓查项与检查组的中间表，一个检查组有多个检查项
@@ -11,6 +14,8 @@ import lombok.Data;
  */
 @TableName(value ="t_checkgroup_checkitem")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CheckgroupCheckitem implements Serializable {
     /**
      * 

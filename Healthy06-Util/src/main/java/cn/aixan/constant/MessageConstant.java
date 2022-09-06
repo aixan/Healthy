@@ -12,8 +12,8 @@ public class MessageConstant {
     public static final String QUERY_BUSINESS_FAIL = "查询运营数据失败";
     public static final String QUERY_BUSINESS_SUCCESS = "查询运营数据成功";
 
-    public static final String QUERY_CHECKGROUPCHECKITEM_FAIL = "查询检查组的检查项失败";
-    public static final String QUERY_CHECKGROUPCHECKITEM_SUCCESS = "查询检查组的检查项失败";
+    public static final String QUERY_CHECK_GROUP_ITEM_FAIL = "查询检查组的检查项失败";
+    public static final String QUERY_CHECK_GROUP_ITEM_SUCCESS = "查询检查组的检查项失败";
 
     public static final String QUERY_MEMBER_SUCCESS = "查询会员信息成功";
     public static final String QUERY_MEMBER_FAIL = "查询会员信息失败";
@@ -29,14 +29,15 @@ public class MessageConstant {
 
     public static final String UPLOAD_SUCCESS = "上传成功";
     public static final String UPLOAD_FAIL = "上传失败";
-    public static final String ADD_CHECKGROUP_FAIL = "新增检查组失败";
-    public static final String ADD_CHECKGROUP_SUCCESS = "新增检查组成功";
-    public static final String DELETE_CHECKGROUP_FAIL = "删除检查组失败";
-    public static final String DELETE_CHECKGROUP_SUCCESS = "删除检查组成功";
-    public static final String QUERY_CHECKGROUP_SUCCESS = "查询检查组成功";
-    public static final String QUERY_CHECKGROUP_FAIL = "查询检查组失败";
-    public static final String EDIT_CHECKGROUP_FAIL = "编辑检查组失败";
-    public static final String EDIT_CHECKGROUP_SUCCESS = "编辑检查组成功";
+
+    public static final String ADD_CHECK_GROUP_FAIL = "新增检查组失败";
+    public static final String ADD_CHECK_GROUP_SUCCESS = "新增检查组成功";
+    public static final String DELETE_CHECK_GROUP_FAIL = "删除检查组失败";
+    public static final String DELETE_CHECK_GROUP_SUCCESS = "删除检查组成功";
+    public static final String QUERY_CHECK_GROUP_SUCCESS = "查询检查组成功";
+    public static final String QUERY_CHECK_GROUP_FAIL = "查询检查组失败";
+    public static final String EDIT_CHECK_GROUP_FAIL = "编辑检查组失败";
+    public static final String EDIT_CHECK_GROUP_SUCCESS = "编辑检查组成功";
     public static final String PIC_UPLOAD_SUCCESS = "图片上传成功";
     public static final String PIC_UPLOAD_FAIL = "图片上传失败";
     public static final String ADD_SETMEAL_FAIL = "新增套餐失败";

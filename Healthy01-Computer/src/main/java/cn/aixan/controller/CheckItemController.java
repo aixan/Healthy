@@ -27,8 +27,8 @@ public class CheckItemController {
     private CheckitemService checkitemService;
 
     @GetMapping
-    public List<Checkitem> list(){
-        return checkitemService.list();
+    public Result<Object> list(){
+        return Result.success(checkitemService.list());
     }
 
     @PostMapping
@@ -67,7 +67,7 @@ public class CheckItemController {
      * @return 分页数据
      */
     @PostMapping("/list")
-    public Result<Object> listPage(@RequestBody(required = false) QueryPage queryPage) {
+    public Result<Object> listPage(@RequestBody QueryPage queryPage) {
         Page<Checkitem> checkItemPage = checkitemService.listPage(queryPage);
         return Result.success(checkItemPage);
     }
