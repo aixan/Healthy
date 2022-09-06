@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 /**
  * 检查组控制器
  *
@@ -64,6 +66,18 @@ public class CheckGroupController {
             return Result.failed(MessageConstant.MESSAGE_ILLEGAL_PARAMETER);
         }
         boolean deleteResult = checkgroupService.deleteById(id);
+        if (!deleteResult) {
+            return Result.failed(MessageConstant.DELETE_CHECK_GROUP_FAIL);
+        }
+        return Result.success(MessageConstant.DELETE_CHECK_GROUP_SUCCESS);
+    }
+
+    @DeleteMapping
+    public Result<Object> deleteCheckGroupByIds(Integer[] ids) {
+        if (ids.length == 0) {
+            return Result.failed(MessageConstant.MESSAGE_ILLEGAL_PARAMETER);
+        }
+        boolean deleteResult = checkgroupService.removeByIds(Arrays.asList(ids));
         if (!deleteResult) {
             return Result.failed(MessageConstant.DELETE_CHECK_GROUP_FAIL);
         }

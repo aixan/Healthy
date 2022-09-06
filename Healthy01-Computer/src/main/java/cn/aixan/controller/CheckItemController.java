@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * 检查项控制器
@@ -83,6 +83,23 @@ public class CheckItemController {
             return Result.failed(MessageConstant.MESSAGE_ILLEGAL_PARAMETER);
         }
         boolean result = checkitemService.removeById(id);
+        if (!result) {
+            return Result.failed(MessageConstant.DELETE_CHECK_ITEM_FAIL);
+        }
+        return Result.success(MessageConstant.DELETE_CHECK_ITEM_SUCCESS);
+    }
+
+    /**
+     * 根据ID数组批量删除数据
+     * @param ids 批量删除id数组
+     * @return 删除结果
+     */
+    @DeleteMapping
+    public Result<Object> deleteByIdS(Integer[] ids) {
+        if (ids.length == 0) {
+            return Result.failed(MessageConstant.MESSAGE_ILLEGAL_PARAMETER);
+        }
+        boolean result = checkitemService.removeByIds(Arrays.asList(ids));
         if (!result) {
             return Result.failed(MessageConstant.DELETE_CHECK_ITEM_FAIL);
         }

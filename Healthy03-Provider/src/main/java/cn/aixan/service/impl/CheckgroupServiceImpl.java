@@ -100,9 +100,7 @@ public class CheckgroupServiceImpl extends ServiceImpl<CheckgroupMapper, Checkgr
         if (one != null && !Objects.equals(one.getId(), checkgroup.getId())) {
             return false;
         }
-        QueryWrapper<Checkgroup> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", checkgroup.getId());
-        boolean saveResult = this.update(checkgroup, queryWrapper);
+        boolean saveResult = this.updateById(checkgroup);
         if (!saveResult) {
             throw new RuntimeException(MessageConstant.EDIT_CHECK_GROUP_FAIL);
         }
@@ -138,17 +136,7 @@ public class CheckgroupServiceImpl extends ServiceImpl<CheckgroupMapper, Checkgr
         if (id <= 0) {
             throw new RuntimeException("检查组ID错误");
         }
-        QueryWrapper<CheckgroupCheckitem> checkGroupCheckItemQueryWrapper = new QueryWrapper<>();
-        checkGroupCheckItemQueryWrapper.eq("checkgroup_id", id);
-        boolean remove = this.checkgroupCheckitemService.remove(checkGroupCheckItemQueryWrapper);
-        if (!remove) {
-            throw  new RuntimeException("关联表删除失败");
-        }
-        boolean b = this.removeById(id);
-        if (!b) {
-            throw new RuntimeException("检查组删除失败");
-        }
-        return true;
+        return this.removeById(id);
     }
 }
 
