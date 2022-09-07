@@ -12,10 +12,5 @@ import java.util.List;
 * @createDate 2022-09-02 15:25:09
 */
 public interface CheckgroupCheckitemService extends IService<CheckgroupCheckitem> {
-    /**
-     * 根据检查组查询关联的检查项ID
-     * @param id 检查组ID
-     * @return 检查项集合
-     */
-    List<Integer> getCheckItemByGroupId(Integer id);
+
 }

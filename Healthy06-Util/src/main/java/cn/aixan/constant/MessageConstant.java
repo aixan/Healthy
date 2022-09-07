@@ -40,6 +40,7 @@ public class MessageConstant {
     public static final String EDIT_CHECK_GROUP_SUCCESS = "编辑检查组成功";
     public static final String PIC_UPLOAD_SUCCESS = "图片上传成功";
     public static final String PIC_UPLOAD_FAIL = "图片上传失败";
+
     public static final String ADD_SETMEAL_FAIL = "新增套餐失败";
     public static final String ADD_SETMEAL_SUCCESS = "新增套餐成功";
     public static final String IMPORT_ORDERSETTING_FAIL = "批量导入预约设置数据失败";
@@ -59,10 +60,20 @@ public class MessageConstant {
     public static final String VALIDATECODE_ERROR = "验证码输入错误";
     public static final String QUERY_ORDER_SUCCESS = "查询预约信息成功";
     public static final String QUERY_ORDER_FAIL = "查询预约信息失败";
-    public static final String QUERY_SETMEALLIST_SUCCESS = "查询套餐列表数据成功";
-    public static final String QUERY_SETMEALLIST_FAIL = "查询套餐列表数据失败";
-    public static final String QUERY_SETMEAL_SUCCESS = "查询套餐数据成功";
-    public static final String QUERY_SETMEAL_FAIL = "查询套餐数据失败";
+
+    public static final String QUERY_SET_MEAL_LIST_SUCCESS = "查询套餐列表数据成功";
+    public static final String QUERY_SET_MEAL_LIST_FAIL = "查询套餐列表数据失败";
+    public static final String QUERY_SET_MEAL_SUCCESS = "查询套餐数据成功";
+    public static final String QUERY_SET_MEAL_FAIL = "查询套餐数据失败";
+    public static final String ADD_SET_MEAL_SUCCESS = "添加套餐数据成功";
+    public static final String ADD_SET_MEAL_FAIL = "添加套餐数据失败";
+    public static final String ADD_SET_MEAL_CHECK_GROUP_SUCCESS = "套餐关联检查组成功";
+    public static final String ADD_SET_MEAL_CHECK_GROUP_FAIL = "套餐关联检查组失败";
+    public static final String EDIT_SET_MEAL_SUCCESS = "编辑套餐数据成功";
+    public static final String EDIT_SET_MEAL_FAIL = "编辑套餐数据失败";
+    public static final String DELETE_SET_MEAL_SUCCESS = "删除套餐数据成功";
+    public static final String DELETE_SET_MEAL_FAIL = "删除套餐数据失败";
+
     public static final String SEND_VALIDATECODE_FAIL = "验证码发送失败";
     public static final String SEND_VALIDATECODE_SUCCESS = "验证码发送成功";
     public static final String SELECTED_DATE_CANNOT_ORDER = "所选日期不能进行体检预约";

@@ -4,54 +4,61 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 检查组
+ *
  * @TableName t_checkgroup
  */
-@TableName(value ="t_checkgroup")
+@TableName(value = "t_checkgroup")
 @Data
 public class Checkgroup implements Serializable {
     /**
-     * 
+     *
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 
+     *
      */
     private String code;
 
     /**
-     * 
+     *
      */
     private String name;
 
     /**
-     * 
+     *
      */
     private String helpcode;
 
     /**
-     * 
+     *
      */
     private String sex;
 
     /**
-     * 
+     *
      */
     private String remark;
 
     /**
-     * 
+     *
      */
     private String attention;
-
     /**
-     * 
+     *
+     */
+    @TableField(exist = false)
+    private List<Integer> checkItemIds;
+    /**
+     *
      */
     private Integer deleted;
 
@@ -71,13 +78,13 @@ public class Checkgroup implements Serializable {
         }
         Checkgroup other = (Checkgroup) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getHelpcode() == null ? other.getHelpcode() == null : this.getHelpcode().equals(other.getHelpcode()))
-            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
-            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-            && (this.getAttention() == null ? other.getAttention() == null : this.getAttention().equals(other.getAttention()))
-            && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()));
+                && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
+                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+                && (this.getHelpcode() == null ? other.getHelpcode() == null : this.getHelpcode().equals(other.getHelpcode()))
+                && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
+                && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
+                && (this.getAttention() == null ? other.getAttention() == null : this.getAttention().equals(other.getAttention()))
+                && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()));
     }
 
     @Override
@@ -108,6 +115,7 @@ public class Checkgroup implements Serializable {
         sb.append(", sex=").append(sex);
         sb.append(", remark=").append(remark);
         sb.append(", attention=").append(attention);
+        sb.append(", checkItemIds=").append(checkItemIds);
         sb.append(", deleted=").append(deleted);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

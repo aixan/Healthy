@@ -1,6 +1,8 @@
 package cn.aixan.service.impl;
 
+import cn.aixan.common.ErrorCode;
 import cn.aixan.constant.MessageConstant;
+import cn.aixan.exception.BusinessException;
 import cn.aixan.mapper.CheckgroupMapper;
 import cn.aixan.model.domain.Checkgroup;
 import cn.aixan.model.domain.CheckgroupCheckitem;
@@ -15,9 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
+ * 检查组实现类
+ *
  * @author aix
  * @description 针对表【t_checkgroup(检查组)】的数据库操作Service实现
  * @createDate 2022-09-02 15:25:09
@@ -132,11 +138,33 @@ public class CheckgroupServiceImpl extends ServiceImpl<CheckgroupMapper, Checkgr
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean  deleteById(Long id) {
+    public boolean deleteById(Long id) {
         if (id <= 0) {
             throw new RuntimeException("检查组ID错误");
         }
         return this.removeById(id);
+    }
+
+    @Override
+    public Checkgroup getCheckGroupById(Integer id) {
+        if (id == null || id < 0) {
+            throw new BusinessException(ErrorCode.NULL_ERROR,MessageConstant.MESSAGE_WRONG_PARAMETER);
+        }
+        Checkgroup checkgroup = this.getById(id);
+        if (checkgroup == null) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,MessageConstant.QUERY_CHECK_ITEM_FAIL);
+        }
+        // 根据检查组ID查询所有关联表数据
+        QueryWrapper<CheckgroupCheckitem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("checkgroup_id", id);
+        List<CheckgroupCheckitem> list = checkgroupCheckitemService.list(queryWrapper);
+        if (list == null) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,MessageConstant.QUERY_CHECK_GROUP_ITEM_SUCCESS);
+        }
+        // 查出关联表数据遍历检查项ID
+        List<Integer> collect = list.stream().map(CheckgroupCheckitem::getCheckitemId).collect(Collectors.toList());
+        checkgroup.setCheckItemIds(collect);
+        return checkgroup;
     }
 }
 

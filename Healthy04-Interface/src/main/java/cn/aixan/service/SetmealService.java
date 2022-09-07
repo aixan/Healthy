@@ -20,4 +20,18 @@ public interface SetmealService extends IService<Setmeal> {
      * @return 分页信息
      */
     Page<Setmeal> getCheckGroupPage(QueryPage queryPage);
+
+    /**
+     * 添加套餐
+     * @param setMeal 套餐信息
+     * @return 添加结果
+     */
+    boolean addSetMeal(Setmeal setMeal);
+
+    /**
+     * 根据ID获取套餐
+     * @param id 套餐ID
+     * @return 套餐信息
+     */
+    Setmeal getSetMealById(Integer id);
 }

@@ -24,23 +24,7 @@ import java.util.stream.Collectors;
 @DubboService
 public class CheckgroupCheckitemServiceImpl extends ServiceImpl<CheckgroupCheckitemMapper, CheckgroupCheckitem>
         implements CheckgroupCheckitemService {
-
-    @Resource
-    private CheckitemService checkitemService;
-
-    @Override
-    public List<Integer> getCheckItemByGroupId(Integer id) {
-        // 根据检查组ID查询所有关联表数据
-        QueryWrapper<CheckgroupCheckitem> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("checkgroup_id", id);
-        List<CheckgroupCheckitem> list = this.list(queryWrapper);
-        if (list == null) {
-            // todo 需要自定义异常类
-            throw new RuntimeException(MessageConstant.QUERY_CHECK_GROUP_ITEM_FAIL);
-        }
-        // 查出关联表数据遍历检查项ID
-        return list.stream().map(CheckgroupCheckitem::getCheckitemId).collect(Collectors.toList());
-    }
+    
 }
 
 

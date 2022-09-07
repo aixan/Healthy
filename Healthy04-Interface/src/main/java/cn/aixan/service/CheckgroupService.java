@@ -43,4 +43,11 @@ public interface CheckgroupService extends IService<Checkgroup> {
      * @return 删除结果
      */
     boolean deleteById(Long id);
+
+    /**
+     * 获取检查组信息
+     * @param id 检查组ID
+     * @return 检查组信息
+     */
+    Checkgroup getCheckGroupById(Integer id);
 }

@@ -4,69 +4,78 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 套餐
+ *
  * @TableName t_setmeal
  */
-@TableName(value ="t_setmeal")
+@TableName(value = "t_setmeal")
 @Data
 public class Setmeal implements Serializable {
     /**
-     * 
+     *
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 
+     *
      */
     private String name;
 
     /**
-     * 
+     *
      */
     private String code;
 
     /**
-     * 
+     *
      */
     private String helpcode;
 
     /**
-     * 
+     *
      */
     private String sex;
 
     /**
-     * 
+     *
      */
     private String age;
 
     /**
-     * 
+     *
      */
     private Double price;
 
     /**
-     * 
+     *
      */
     private String remark;
 
     /**
-     * 
+     *
      */
     private String attention;
 
     /**
-     * 
+     *
      */
     private String img;
 
     /**
-     * 
+     *
+     */
+    @TableField(exist = false)
+    private List<Integer> checkGroupIds;
+
+    /**
+     *
      */
     private Integer deleted;
 
@@ -86,16 +95,16 @@ public class Setmeal implements Serializable {
         }
         Setmeal other = (Setmeal) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
-            && (this.getHelpcode() == null ? other.getHelpcode() == null : this.getHelpcode().equals(other.getHelpcode()))
-            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
-            && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
-            && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
-            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-            && (this.getAttention() == null ? other.getAttention() == null : this.getAttention().equals(other.getAttention()))
-            && (this.getImg() == null ? other.getImg() == null : this.getImg().equals(other.getImg()))
-            && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()));
+                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+                && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
+                && (this.getHelpcode() == null ? other.getHelpcode() == null : this.getHelpcode().equals(other.getHelpcode()))
+                && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
+                && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
+                && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
+                && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
+                && (this.getAttention() == null ? other.getAttention() == null : this.getAttention().equals(other.getAttention()))
+                && (this.getImg() == null ? other.getImg() == null : this.getImg().equals(other.getImg()))
+                && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()));
     }
 
     @Override
@@ -132,6 +141,7 @@ public class Setmeal implements Serializable {
         sb.append(", remark=").append(remark);
         sb.append(", attention=").append(attention);
         sb.append(", img=").append(img);
+        sb.append(", checkGroupIds=").append(checkGroupIds);
         sb.append(", deleted=").append(deleted);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
