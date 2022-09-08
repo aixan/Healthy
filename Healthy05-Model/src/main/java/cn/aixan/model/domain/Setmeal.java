@@ -1,9 +1,8 @@
 package cn.aixan.model.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,65 +20,79 @@ public class Setmeal implements Serializable {
      *
      */
     @TableId(type = IdType.AUTO)
+    @ExcelProperty("ID")
     private Integer id;
 
     /**
      *
      */
+    @ExcelProperty("套餐名字")
     private String name;
 
     /**
      *
      */
+    @ExcelProperty("套餐编码")
     private String code;
 
     /**
      *
      */
+    @ExcelProperty("助记码")
     private String helpcode;
 
     /**
      *
      */
+    @ExcelProperty("适合性别")
     private String sex;
 
     /**
      *
      */
+    @ExcelProperty("适合年龄")
     private String age;
 
     /**
      *
      */
+    @ExcelProperty("价格")
     private Double price;
 
     /**
      *
      */
+    @ExcelProperty("备注")
     private String remark;
 
     /**
      *
      */
+    @ExcelProperty("注意事项")
     private String attention;
 
     /**
      *
      */
+    @ExcelIgnore
     private String img;
 
     /**
      *
      */
     @TableField(exist = false)
+    @ExcelIgnore
     private List<Integer> checkGroupIds;
 
     /**
      *
      */
+    @TableLogic
+    @ExcelIgnore
     private Integer deleted;
 
     @TableField(exist = false)
+    @ExcelIgnore
     private static final long serialVersionUID = 1L;
 
     @Override

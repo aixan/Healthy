@@ -4,6 +4,9 @@ import cn.aixan.model.domain.Setmeal;
 import cn.aixan.util.QueryPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 /**
  * 套餐接口
@@ -34,4 +37,11 @@ public interface SetmealService extends IService<Setmeal> {
      * @return 套餐信息
      */
     Setmeal getSetMealById(Integer id);
+
+    /**
+     * 筛选下载套餐信息
+     * @param search 筛选条件
+     * @return 下载信息
+     */
+    List<Setmeal> listForDownload(String search);
 }

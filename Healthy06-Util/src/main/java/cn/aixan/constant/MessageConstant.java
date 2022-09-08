@@ -29,6 +29,8 @@ public class MessageConstant {
 
     public static final String UPLOAD_SUCCESS = "上传成功";
     public static final String UPLOAD_FAIL = "上传失败";
+    public static final String DOWNLOAD_SUCCESS = "下载成功";
+    public static final String DOWNLOAD_FAIL = "下载失败";
 
     public static final String ADD_CHECK_GROUP_FAIL = "新增检查组失败";
     public static final String ADD_CHECK_GROUP_SUCCESS = "新增检查组成功";
