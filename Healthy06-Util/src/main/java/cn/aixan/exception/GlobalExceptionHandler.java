@@ -19,6 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public BaseResponse<Object> businessExceptionHandler(BusinessException e) {
         log.error("businessException:" + e.getMessage(), e);
+        System.out.println("123123");
         return ResultUtils.error(e.getCode(), e.getMessage(), e.getDescription());
     }
 

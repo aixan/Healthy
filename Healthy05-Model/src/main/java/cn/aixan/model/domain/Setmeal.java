@@ -84,6 +84,10 @@ public class Setmeal implements Serializable {
     @ExcelIgnore
     private List<Integer> checkGroupIds;
 
+    @TableField(exist = false)
+    @ExcelIgnore
+    private List<Checkgroup> checkGroups;
+
     /**
      *
      */

@@ -7,6 +7,7 @@ import cn.aixan.mapper.CheckgroupMapper;
 import cn.aixan.model.domain.Checkgroup;
 import cn.aixan.model.domain.CheckgroupCheckitem;
 import cn.aixan.service.CheckgroupService;
+import cn.aixan.util.Pinyin4jUtils;
 import cn.aixan.util.QueryPage;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -60,7 +61,7 @@ public class CheckgroupServiceImpl extends ServiceImpl<CheckgroupMapper, Checkgr
         if (checkgroup == null || checkItemId.length == 0) {
             return false;
         }
-        // 查询检查项名字是否存在
+        // 查询检查组名字是否存在
         String name = checkgroup.getName();
         if (StringUtils.isAnyBlank(name)) {
             return false;
@@ -73,7 +74,12 @@ public class CheckgroupServiceImpl extends ServiceImpl<CheckgroupMapper, Checkgr
         }
         // 防止传入ID
         checkgroup.setId(null);
-
+        // 如果助记码为空设置检查组名字首字母大写
+        String helpCode = checkgroup.getHelpcode();
+        if (helpCode == null) {
+            String pinyinHeadChar = Pinyin4jUtils.getPinyinHeadChar(name);
+            checkgroup.setHelpcode(pinyinHeadChar.toUpperCase());
+        }
         boolean saveResult = this.save(checkgroup);
         if (!saveResult) {
             throw new RuntimeException(MessageConstant.ADD_CHECK_GROUP_FAIL);
@@ -105,6 +111,12 @@ public class CheckgroupServiceImpl extends ServiceImpl<CheckgroupMapper, Checkgr
         Checkgroup one = getOne(checkQueryWrapper);
         if (one != null && !Objects.equals(one.getId(), checkgroup.getId())) {
             return false;
+        }
+        // 如果助记码为空设置检查组名字首字母大写
+        String helpCode = checkgroup.getHelpcode();
+        if (helpCode == null) {
+            String pinyinHeadChar = Pinyin4jUtils.getPinyinHeadChar(name);
+            checkgroup.setHelpcode(pinyinHeadChar.toUpperCase());
         }
         boolean saveResult = this.updateById(checkgroup);
         if (!saveResult) {

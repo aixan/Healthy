@@ -9,7 +9,7 @@ import cn.aixan.common.ErrorCode;
  * @version 2022-09-07 09:11
  */
 public class BusinessException extends RuntimeException {
-
+    private static final long serialVersionUID = -8639638683096739103L;
     private final int code;
     private final String description;
 

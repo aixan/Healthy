@@ -44,4 +44,11 @@ public interface SetmealService extends IService<Setmeal> {
      * @return 下载信息
      */
     List<Setmeal> listForDownload(String search);
+
+    /**
+     * 手机端获取套餐详情
+     * @param id id
+     * @return 套餐详情
+     */
+    Setmeal getSetMealByIdDetails(Long id);
 }

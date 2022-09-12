@@ -10,7 +10,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity cn.aixan.model.domain.Setmeal
 */
 public interface SetmealMapper extends BaseMapper<Setmeal> {
-
+    /**
+     * 查询套餐详情
+     * @param id 套餐ID
+     * @return 套餐详情
+     */
+    Setmeal selectDetails(Long id);
 }
 
 

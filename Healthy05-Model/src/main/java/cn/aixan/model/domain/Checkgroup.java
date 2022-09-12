@@ -57,6 +57,9 @@ public class Checkgroup implements Serializable {
      */
     @TableField(exist = false)
     private List<Integer> checkItemIds;
+
+    @TableField(exist = false)
+    private List<Checkitem> checkItems;
     /**
      *
      */

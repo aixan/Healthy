@@ -79,6 +79,12 @@ public class MessageConstant {
     public static final String SEND_VALIDATECODE_FAIL = "验证码发送失败";
     public static final String SEND_VALIDATECODE_SUCCESS = "验证码发送成功";
     public static final String SELECTED_DATE_CANNOT_ORDER = "所选日期不能进行体检预约";
+    public static final String SELECTED_SET_MEAL_CANNOT_ORDER = "所选套餐不能进行体检预约";
+    public static final String SELECTED_SEX_CANNOT_ORDER = "所选套餐与预约人性别不符合";
+    public static final String ADD_ORDER_FAIL = "添加预约人数失败";
+    public static final String ADD_ORDER_SUCCESS = "添加预约人数成功";
+    public static final String EDIT_ORDER_FAIL = "编辑预约人数失败";
+    public static final String EDIT_ORDER_SUCCESS = "编辑预约人数成功";
     public static final String ORDER_FULL = "预约已满";
     public static final String HAS_ORDERED = "已经完成预约，不能重复预约";
     public static final String ORDER_SUCCESS = "预约成功";

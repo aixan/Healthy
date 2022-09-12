@@ -24,4 +24,29 @@
         price,remark,attention,
         img,deleted
     </sql>
+
+    <resultMap id="setMealDetails" type="setmeal" autoMapping="true">
+        <id column="id" property="id" />
+        <collection property="checkGroups" ofType="checkgroup">
+            <id column="tcId" property="id" />
+            <result property="name" column="tcName" />
+            <result property="remark" column="tcRemark" />
+            <collection property="checkItems" ofType="checkitem">
+                <id column="tiId" property="id" />
+                <result column="tiName" property="name" />
+            </collection>
+        </collection>
+
+    </resultMap>
+    
+    <select id="selectDetails" resultMap="setMealDetails">
+        select
+            ts.*,tc.id as tcId, tc.name as tcName,tc.remark as tcRemark,ti.id as tiId,ti.name as tiName
+        from t_setmeal ts
+                 inner join t_setmeal_checkgroup tsc on ts.id = tsc.setmeal_id
+                 inner join t_checkgroup tc on tc.id = tsc.checkgroup_id
+                 inner join t_checkgroup_checkitem tcc on tc.id = tcc.checkgroup_id
+                 inner join t_checkitem ti on tcc.checkitem_id = ti.id
+        where ts.deleted = 1 and tc.deleted = 1 and ti.deleted = 1 and ts.id = #{id}
+    </select>
 </mapper>

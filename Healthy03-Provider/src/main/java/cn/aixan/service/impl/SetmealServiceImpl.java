@@ -8,6 +8,7 @@ import cn.aixan.model.domain.Setmeal;
 import cn.aixan.model.domain.SetmealCheckgroup;
 import cn.aixan.service.SetmealCheckgroupService;
 import cn.aixan.service.SetmealService;
+import cn.aixan.util.Pinyin4jUtils;
 import cn.aixan.util.QueryPage;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -95,6 +96,12 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, MessageConstant.ADD_SETMEAL_FAIL);
         }
         Integer id = setMeal.getId();
+        // 如果助记码为空设置套餐名字首字母大写
+        String helpCode = setMeal.getHelpcode();
+        if (helpCode == null) {
+            String pinyinHeadChar = Pinyin4jUtils.getPinyinHeadChar(name);
+            setMeal.setHelpcode(pinyinHeadChar.toUpperCase());
+        }
         checkGroupIds.forEach(checkGroupId -> {
             SetmealCheckgroup setmealCheckgroup = new SetmealCheckgroup();
             setmealCheckgroup.setSetmealId(id);
@@ -143,6 +150,11 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
         }
 
         return list;
+    }
+
+    @Override
+    public Setmeal getSetMealByIdDetails(Long id) {
+        return this.getBaseMapper().selectDetails(id);
     }
 }
 
